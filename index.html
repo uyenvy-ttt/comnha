@@ -2,131 +2,131 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Menu chọn món</title>
+  <title>Menu Nhà Hàng</title>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #ffd8f5;   /* nền hồng nhạt */
-      color: #332b31;        /* chữ */
+      background: #111;
+      color: #fff;
     }
 
+    .container {
+      display: flex;
+      height: 100vh;
+    }
+
+    /* Sidebar bên trái */
     .sidebar {
       width: 220px;
-      height: 100vh;
-      position: fixed;
-      top: 0;
-      left: 0;
-      background: #f7bfe8;   /* sidebar */
+      background: #222;
       padding: 20px 10px;
-      box-sizing: border-box;
     }
-
     .sidebar h2 {
-      font-size: 20px;
-      margin-bottom: 10px;
-      color: #332b31;
+      color: #ffcc00;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+    .sidebar li {
+      padding: 12px;
+      cursor: pointer;
+      background: #333;
+      margin-bottom: 8px;
+      text-align: center;
+      border-radius: 6px;
+    }
+    .sidebar li:hover {
+      background: #444;
     }
 
-    .sidebar a {
-      display: block;
-      padding: 10px;
-      margin-bottom: 5px;
-      color: #332b31;
-      text-decoration: none;
-      border-radius: 5px;
-    }
-
-    .sidebar a:hover {
-      background: #f48dd4;
-    }
-
-    .main {
-      margin-left: 240px;
+    /* Khu vực hiển thị món */
+    .menu-content {
+      flex: 1;
       padding: 20px;
-    }
-
-    .dish-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 15px;
+      gap: 20px;
+      overflow-y: auto;
     }
 
     .dish {
-      background: #ffe5f8;   /* khung món ăn */
+      background: #222;
       border-radius: 10px;
-      padding: 10px;
+      overflow: hidden;
       text-align: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: 0.3s;
     }
-
+    .dish:hover {
+      transform: scale(1.05);
+    }
     .dish img {
       width: 100%;
-      height: 120px;
+      height: 130px;
       object-fit: cover;
-      border-radius: 10px;
     }
-
-    .dish p {
-      margin: 8px 0 0;
-      font-weight: bold;
+    .dish h3 {
+      padding: 10px;
+      margin: 0;
+      font-size: 16px;
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2>Danh mục</h2>
+      <ul>
+        <li onclick="showCategory('monman')">Món mặn</li>
+        <li onclick="showCategory('moncanh')">Món canh</li>
+        <li onclick="showCategory('an-kem')">Ăn kèm</li>
+      </ul>
+    </div>
 
-  <!-- Menu bên trái -->
-  <div class="sidebar">
-    <h2>Danh mục</h2>
-    <a href="#mon-man">Món mặn</a>
-    <a href="#mon-canh">Món canh</a>
-    <a href="#mon-an-kem">Món ăn kèm</a>
+    <!-- Nội dung món -->
+    <div class="menu-content" id="menu">
+      <!-- Món sẽ hiện ở đây -->
+    </div>
   </div>
 
-  <!-- Nội dung chính -->
-  <div class="main">
-    <h1>Menu chọn món</h1>
+  <script>
+    // Dữ liệu món ăn
+    const dishes = {
+      monman: [
+        { name: "Thịt kho tàu", img: "thit-kho.jpg" },
+        { name: "Gà chiên mắm", img: "ga-chien.jpg" },
+        { name: "Bò xào hành", img: "bo-xao.jpg" }
+      ],
+      moncanh: [
+        { name: "Canh chua cá", img: "canh-chua.jpg" },
+        { name: "Canh bí đỏ", img: "canh-bi.jpg" }
+      ],
+      "an-kem": [
+        { name: "Dưa muối", img: "dua-muoi.jpg" },
+        { name: "Kim chi", img: "kimchi.jpg" }
+      ]
+    };
 
-    <!-- Món mặn -->
-    <h2 id="mon-man">Món mặn</h2>
-    <div class="dish-grid">
-      <div class="dish">
-        <img src="images/thitlon.jpg" alt="Thịt lợn">
-        <p>Thịt lợn kho</p>
-      </div>
-      <div class="dish">
-        <img src="images/thitbo.jpg" alt="Thịt bò">
-        <p>Thịt bò xào</p>
-      </div>
-    </div>
+    // Hàm hiển thị món
+    function showCategory(category) {
+      const menu = document.getElementById("menu");
+      menu.innerHTML = "";
+      dishes[category].forEach(dish => {
+        menu.innerHTML += `
+          <div class="dish">
+            <img src="${dish.img}" alt="${dish.name}">
+            <h3>${dish.name}</h3>
+          </div>
+        `;
+      });
+    }
 
-    <!-- Món canh -->
-    <h2 id="mon-canh">Món canh</h2>
-    <div class="dish-grid">
-      <div class="dish">
-        <img src="images/canhchua.jpg" alt="Canh chua">
-        <p>Canh chua cá</p>
-      </div>
-      <div class="dish">
-        <img src="images/canhrau.jpg" alt="Canh rau">
-        <p>Canh rau ngót</p>
-      </div>
-    </div>
-
-    <!-- Món ăn kèm -->
-    <h2 id="mon-an-kem">Món ăn kèm</h2>
-    <div class="dish-grid">
-      <div class="dish">
-        <img src="images/ddua.jpg" alt="Dưa góp">
-        <p>Dưa góp</p>
-      </div>
-      <div class="dish">
-        <img src="images/dauphu.jpg" alt="Đậu phụ">
-        <p>Đậu phụ rán</p>
-      </div>
-    </div>
-
-  </div>
-
+    // Mặc định load "món mặn"
+    showCategory("monman");
+  </script>
 </body>
 </html>
