@@ -4,78 +4,140 @@
   <meta charset="UTF-8">
   <title>Menu chọn món</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 30px;
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h1 { color: #333; }
+    .category {
+      margin-bottom: 15px;
     }
-    h1 {
-      color: #333;
+    .category button {
+      background: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .category button:hover {
+      background: #45a049;
+    }
+    .dishes {
+      display: none; /* ẩn lúc đầu */
+      margin-top: 10px;
+      padding-left: 20px;
     }
     .dish {
-      display: inline-block;
-      margin: 15px;
-      text-align: center;
+      margin: 8px 0;
     }
     .dish img {
-      display: block;
-      width: 150px;
-      height: 100px;
+      width: 120px;
+      height: 80px;
       object-fit: cover;
-      border-radius: 8px;
-      margin-bottom: 5px;
+      border-radius: 6px;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+    label {
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
   <h1>Menu chọn món</h1>
-  <p>Tích chọn món bạn muốn:</p>
+  <p>Bấm vào từng mục để chọn món:</p>
 
-  <form id="menuForm">
-    <div class="dish">
-      <input type="checkbox" id="pho" value="Phở bò">
-      <label for="pho">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/60/Pho-Beef-Noodles-2008.jpg">
-        Phở bò
-      </label>
+  <!-- Món mặn -->
+  <div class="category">
+    <button onclick="toggleMenu('monman')">Món mặn</button>
+    <div id="monman" class="dishes">
+      <h3>Thịt lợn</h3>
+      <div class="dish">
+        <input type="checkbox" id="suonnuong" value="Sườn nướng">
+        <label for="suonnuong">
+          <!-- Ảnh bạn up lên repo, VD: suonnuong.jpg -->
+          <img src="suonnuong.jpg">
+          Sườn nướng
+        </label>
+      </div>
+      <div class="dish">
+        <input type="checkbox" id="thitkho" value="Thịt kho tàu">
+        <label for="thitkho">
+          <img src="thitkho.jpg">
+          Thịt kho tàu
+        </label>
+      </div>
+
+      <h3>Thịt bò</h3>
+      <div class="dish">
+        <input type="checkbox" id="boxao" value="Bò xào rau muống">
+        <label for="boxao">
+          <img src="boxao.jpg">
+          Bò xào rau muống
+        </label>
+      </div>
     </div>
+  </div>
 
-    <div class="dish">
-      <input type="checkbox" id="buncha" value="Bún chả">
-      <label for="buncha">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Bun_cha_Ha_Noi.jpg">
-        Bún chả
-      </label>
+  <!-- Món canh -->
+  <div class="category">
+    <button onclick="toggleMenu('moncanh')">Món canh</button>
+    <div id="moncanh" class="dishes">
+      <div class="dish">
+        <input type="checkbox" id="canhchua" value="Canh chua cá">
+        <label for="canhchua">
+          <img src="canhchua.jpg">
+          Canh chua cá
+        </label>
+      </div>
+      <div class="dish">
+        <input type="checkbox" id="canhrau" value="Canh rau ngót">
+        <label for="canhrau">
+          <img src="canhrau.jpg">
+          Canh rau ngót
+        </label>
+      </div>
     </div>
+  </div>
 
-    <div class="dish">
-      <input type="checkbox" id="banhmi" value="Bánh mì">
-      <label for="banhmi">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Banh_Mi_thit.jpg">
-        Bánh mì
-      </label>
+  <!-- Món ăn kèm -->
+  <div class="category">
+    <button onclick="toggleMenu('monankem')">Món ăn kèm</button>
+    <div id="monankem" class="dishes">
+      <div class="dish">
+        <input type="checkbox" id="dua" value="Dưa muối">
+        <label for="dua">
+          <img src="dua.jpg">
+          Dưa muối
+        </label>
+      </div>
+      <div class="dish">
+        <input type="checkbox" id="chagio" value="Chả giò">
+        <label for="chagio">
+          <img src="chagio.jpg">
+          Chả giò
+        </label>
+      </div>
     </div>
+  </div>
 
-    <div class="dish">
-      <input type="checkbox" id="comtam" value="Cơm tấm">
-      <label for="comtam">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/Com_tam_suon_bi_cha.jpg">
-        Cơm tấm
-      </label>
-    </div>
-
-    <br><br>
-    <button type="button" onclick="showSelection()">Xem đơn</button>
-  </form>
+  <br>
+  <button onclick="showSelection()">Xem đơn</button>
 
   <h2>Đơn bạn chọn:</h2>
   <div id="result"></div>
 
   <script>
+    function toggleMenu(id) {
+      const menu = document.getElementById(id);
+      menu.style.display = menu.style.display === "block" ? "none" : "block";
+    }
+
     function showSelection() {
       const checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
       let selected = [];
       checkboxes.forEach(cb => selected.push(cb.value));
-      document.getElementById("result").innerText = selected.length ? selected.join(", ") : "Chưa chọn món nào";
+      document.getElementById("result").innerText =
+        selected.length ? selected.join(", ") : "Chưa chọn món nào";
     }
   </script>
 </body>
