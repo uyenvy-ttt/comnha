@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Menu chọn món</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+    }
+    h1 {
+      color: #333;
+    }
+    .dish {
+      display: inline-block;
+      margin: 15px;
+      text-align: center;
+    }
+    .dish img {
+      display: block;
+      width: 150px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Menu chọn món</h1>
+  <p>Tích chọn món bạn muốn:</p>
+
+  <form id="menuForm">
+    <div class="dish">
+      <input type="checkbox" id="pho" value="Phở bò">
+      <label for="pho">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/60/Pho-Beef-Noodles-2008.jpg">
+        Phở bò
+      </label>
+    </div>
+
+    <div class="dish">
+      <input type="checkbox" id="buncha" value="Bún chả">
+      <label for="buncha">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Bun_cha_Ha_Noi.jpg">
+        Bún chả
+      </label>
+    </div>
+
+    <div class="dish">
+      <input type="checkbox" id="banhmi" value="Bánh mì">
+      <label for="banhmi">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Banh_Mi_thit.jpg">
+        Bánh mì
+      </label>
+    </div>
+
+    <div class="dish">
+      <input type="checkbox" id="comtam" value="Cơm tấm">
+      <label for="comtam">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/Com_tam_suon_bi_cha.jpg">
+        Cơm tấm
+      </label>
+    </div>
+
+    <br><br>
+    <button type="button" onclick="showSelection()">Xem đơn</button>
+  </form>
+
+  <h2>Đơn bạn chọn:</h2>
+  <div id="result"></div>
+
+  <script>
+    function showSelection() {
+      const checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
+      let selected = [];
+      checkboxes.forEach(cb => selected.push(cb.value));
+      document.getElementById("result").innerText = selected.length ? selected.join(", ") : "Chưa chọn món nào";
+    }
+  </script>
+</body>
+</html>
